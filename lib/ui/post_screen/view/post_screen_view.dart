@@ -1,0 +1,128 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../dialog/post_screen_dialog.dart';
+import '../view_model/post_screen_view_model.dart';
+import '../view_model/checkmodal_viewmodel.dart';
+
+class PostScreen extends ConsumerWidget {
+  PostScreen({
+    super.key,
+    required this.index,
+    required this.content,
+    required this.checkOfPriviousList,
+  });
+
+  final int index;
+  final String content;
+  final bool checkOfPriviousList;
+  final FocusNode _focusNode = FocusNode();
+  late final TextEditingController _controller =
+      TextEditingController(text: content.isEmpty ? '' : content);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final postNotifier = ref.read(postScreenViewModelProvider.notifier);
+    final textStateNotifier = ref.read(textStateNotifierProvider.notifier);
+    final textState = ref.watch(textStateNotifierProvider);
+    final isModalVisible = ref.watch(checkOfPriviousListProvider);
+    final modalStateNotifier = ref.read(checkOfPriviousListProvider.notifier);
+
+    _controller.addListener(() {
+      textStateNotifier.updateText(_controller.text);
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!isModalVisible) {
+      _focusNode.requestFocus(); 
+    }else{
+      _focusNode.unfocus();
+    }
+    });
+
+    
+
+    return SafeArea(
+        top: false,
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                padding:
+                    EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Color(0xFFEAEEEF),
+                      width: 1,
+                    ),
+                  ),
+                ),
+                width: double.infinity,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          _focusNode.unfocus();
+                          if (_controller.text.isEmpty) {
+                            Navigator.pop(context);
+                          } else {
+                            modalStateNotifier.updateCheck(true);
+                            returnPostScreenDialog(context);
+                            
+                          }
+                        },
+                        child: Container(
+                            child: Icon(
+                          Icons.close_outlined,
+                          size: 30,
+                        ))),
+                    Container(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: _controller.text.isEmpty
+                                  ? Color(0xFFCAD5D6)
+                                  : Color(0xFF52C2CD),
+                            ),
+                            onPressed: () {
+                              if (_controller.text.isNotEmpty) {
+                                if (checkOfPriviousList) {
+                                  postNotifier.update(index, _controller.text);
+                                } else {
+                                  postNotifier.post(_controller.text);
+                                }
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text("ストックする",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)))),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: TextField(
+                    controller: _controller, // コントローラーを設定
+                    focusNode: _focusNode, // フォーカスノードを設定
+                    decoration: InputDecoration(
+                      border: InputBorder.none, // 枠を見えないようにする
+                      hintText: '気づいたことをストックしましょう',
+                    ),
+                    maxLines: null, // 複数行の入力を許可
+                    keyboardType: TextInputType.multiline,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+}
