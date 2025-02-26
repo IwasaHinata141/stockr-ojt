@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1025135011021",
+    "project_id": "stockr-ojt",
+    "storage_bucket": "stockr-ojt.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025135011021:android:bb90908d0a713260e33584",
+        "android_client_info": {
+          "package_name": "com.example.stockr_ojt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeXe3GDSYxVvIaJxAnv48kA6msKH_XDKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

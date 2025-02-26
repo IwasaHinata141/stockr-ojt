@@ -7,12 +7,12 @@ part of 'post_screen_view_model.dart';
 // **************************************************************************
 
 String _$postScreenViewModelHash() =>
-    r'daebd9740354fa11706d584498bd33fce397638f';
+    r'03e1794bb22b405399d2ae455582ebc6131ccfc3';
 
 /// See also [PostScreenViewModel].
 @ProviderFor(PostScreenViewModel)
-final postScreenViewModelProvider =
-    AutoDisposeNotifierProvider<PostScreenViewModel, List<Map>>.internal(
+final postScreenViewModelProvider = AutoDisposeAsyncNotifierProvider<
+    PostScreenViewModel, List<Map<String, dynamic>>>.internal(
   PostScreenViewModel.new,
   name: r'postScreenViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,7 +22,8 @@ final postScreenViewModelProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$PostScreenViewModel = AutoDisposeNotifier<List<Map>>;
+typedef _$PostScreenViewModel
+    = AutoDisposeAsyncNotifier<List<Map<String, dynamic>>>;
 String _$textStateNotifierHash() => r'4cd565401dda800ca57e22ad21c811ca9324c191';
 
 /// See also [TextStateNotifier].

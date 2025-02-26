@@ -4,12 +4,15 @@ import '../../../ui/post_screen/view/post_screen_view.dart';
 import '../../../ui/post_screen/view_model/post_screen_view_model.dart';
 import '../../../ui/dialog/home_screen_dialog.dart';
 
+import '../../../model/get_my_stock_model.dart';
+
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(postScreenViewModelProvider);
+    final asyncData = ref.watch(postScreenViewModelProvider);
+    final data = asyncData.asData?.value ?? [];
     final count = data.length;
     final postNotifier = ref.read(postScreenViewModelProvider.notifier);
 
@@ -58,12 +61,14 @@ class HomeScreen extends ConsumerWidget {
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 20, right: 20),
         child: FloatingActionButton(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) => PostScreen(index: count,content: "",checkOfPriviousList: false,),
-            );
+          onPressed: () async {
+            final testData = await getMyStockTest();
+            print(testData);
+            // showModalBottomSheet(
+            //   context: context,
+            //   isScrollControlled: true,
+            //   builder: (context) => PostScreen(index: count,content: "",checkOfPriviousList: false,),
+            // );
           },
           tooltip: 'add stock',
           backgroundColor: Color(0xFF52C2CD),
@@ -133,7 +138,7 @@ class StockListWidget extends StatelessWidget {
     required this.count,
   });
 
-  final List<Map> data;
+  final List<dynamic> data;
   final PostScreenViewModel notifier;
   final int count;
 

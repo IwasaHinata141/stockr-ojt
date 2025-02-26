@@ -105,7 +105,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                             onPressed: () {
                               if (_controller.text.isNotEmpty) {
                                 if (widget.checkOfPriviousList) {
-                                  postNotifier.update(widget.index, _controller.text);
+                                  postNotifier.updatePost(widget.index, _controller.text);
                                 } else {
                                   postNotifier.post(_controller.text);
                                 }
