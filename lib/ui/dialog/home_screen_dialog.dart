@@ -1,10 +1,8 @@
-
 import 'package:flutter/material.dart';
 import '../post_screen/view_model/post_screen_view_model.dart';
 
 void returnHomeScreenDialog(
-  BuildContext context,int index,PostScreenViewModel postNotifier
-) {
+    BuildContext context, int index, PostScreenViewModel postNotifier) {
   showDialog(
     context: context,
     builder: (context) {
@@ -45,7 +43,7 @@ void returnHomeScreenDialog(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                      width: 150,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       height: 50,
                       decoration: BoxDecoration(),
                       child: ElevatedButton(
@@ -63,8 +61,9 @@ void returnHomeScreenDialog(
                               style: TextStyle(
                                   color: Color(0xFF768D8F),
                                   fontWeight: FontWeight.bold)))),
+                  SizedBox(width: 10),
                   Container(
-                      width: 150,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       height: 50,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(

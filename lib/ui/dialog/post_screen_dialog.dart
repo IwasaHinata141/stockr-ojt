@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 void returnPostScreenDialog(
   BuildContext context,
+  notifier
 ) {
   showDialog(
     context: context,
@@ -39,14 +40,14 @@ void returnPostScreenDialog(
               Container(
                   child: const Text("全て失われます", style: TextStyle(fontSize: 12))),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.38,
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.4, 
+                      height: 50,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFF87951),
@@ -61,9 +62,10 @@ void returnPostScreenDialog(
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
+                                  SizedBox(width: 10,),
                   Container(
-                      width: MediaQuery.of(context).size.width * 0.38,
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: MediaQuery.of(context).size.width * 0.4, 
+                      height: 50,
                       decoration: BoxDecoration(),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -74,8 +76,8 @@ void returnPostScreenDialog(
                             ),
                           ),
                           onPressed: () {
-                            
                             Navigator.pop(context);
+                            notifier.updateCheck(false);
                           },
                           child: Text("編集を続ける",
                               style: TextStyle(

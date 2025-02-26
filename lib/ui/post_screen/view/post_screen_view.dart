@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../dialog/post_screen_dialog.dart';
+import '../../../ui/dialog/post_screen_dialog.dart';
 import '../view_model/post_screen_view_model.dart';
 import '../view_model/checkmodal_viewmodel.dart';
 
-class PostScreen extends ConsumerWidget {
+class PostScreen extends ConsumerStatefulWidget {
   PostScreen({
     super.key,
     required this.index,
@@ -15,31 +15,45 @@ class PostScreen extends ConsumerWidget {
   final int index;
   final String content;
   final bool checkOfPriviousList;
-  final FocusNode _focusNode = FocusNode();
-  late final TextEditingController _controller =
-      TextEditingController(text: content.isEmpty ? '' : content);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final postNotifier = ref.read(postScreenViewModelProvider.notifier);
-    final textStateNotifier = ref.read(textStateNotifierProvider.notifier);
-    final textState = ref.watch(textStateNotifierProvider);
-    final isModalVisible = ref.watch(checkOfPriviousListProvider);
-    final modalStateNotifier = ref.read(checkOfPriviousListProvider.notifier);
+  _PostScreenState createState() => _PostScreenState();
+}
 
+class _PostScreenState extends ConsumerState<PostScreen> {
+  final FocusNode _focusNode = FocusNode();
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.content.isEmpty ? '' : widget.content);
     _controller.addListener(() {
-      textStateNotifier.updateText(_controller.text);
+      ref.read(textStateNotifierProvider.notifier).updateText(_controller.text);
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (!isModalVisible) {
-      _focusNode.requestFocus(); 
-    }else{
-      _focusNode.unfocus();
-    }
+      if (!ref.read(checkOfPriviousListProvider)) {
+        _focusNode.requestFocus();
+      } else {
+        _focusNode.unfocus();
+      }
     });
+  }
 
-    
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final postNotifier = ref.read(postScreenViewModelProvider.notifier);
+    final textState = ref.watch(textStateNotifierProvider);
+    final isModalVisible = ref.watch(checkOfPriviousListProvider);
+    final modalStateNotifier = ref.read(checkOfPriviousListProvider.notifier);
 
     return SafeArea(
         top: false,
@@ -73,8 +87,7 @@ class PostScreen extends ConsumerWidget {
                             Navigator.pop(context);
                           } else {
                             modalStateNotifier.updateCheck(true);
-                            returnPostScreenDialog(context);
-                            
+                            returnPostScreenDialog(context, modalStateNotifier);
                           }
                         },
                         child: Container(
@@ -85,14 +98,14 @@ class PostScreen extends ConsumerWidget {
                     Container(
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: _controller.text.isEmpty
+                              backgroundColor: textState.isEmpty
                                   ? Color(0xFFCAD5D6)
                                   : Color(0xFF52C2CD),
                             ),
                             onPressed: () {
                               if (_controller.text.isNotEmpty) {
-                                if (checkOfPriviousList) {
-                                  postNotifier.update(index, _controller.text);
+                                if (widget.checkOfPriviousList) {
+                                  postNotifier.update(widget.index, _controller.text);
                                 } else {
                                   postNotifier.post(_controller.text);
                                 }
