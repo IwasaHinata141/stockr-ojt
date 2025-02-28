@@ -1,64 +1,68 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../model/add_my_stock_model.dart';
 import '../../../model/update_my_stock_model.dart';
 import '../../../model/delete_my_stock_model.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../model/get_my_stock_model.dart';
 import '../../../model/stock_model.dart';
 
-part 'post_screen_view_model.g.dart';
 
-@riverpod
-class PostScreenViewModel extends _$PostScreenViewModel {
-  @override
-  Stream<List<Stock>> build(){
-    return getMyStock();
+class PostScreenViewModel extends StateNotifier<AsyncValue<List<Stock>>> {
+  PostScreenViewModel() : super(const AsyncValue.loading()) {
+    _init();
   }
 
-  void post(String content) async {
+  Future<void> _init() async {
+    getMyStock().listen((stocks) {
+      state = AsyncValue.data(stocks);
+    });
+  }
+
+  Future<void> post(String content) async {
     DateTime timeStamp = DateTime.now();
-    final String stockCode = Uuid().v4();
+    final String stockCode = const Uuid().v4();
     bool response = await addMyStock(content, timeStamp, stockCode);
     print(response);
   }
 
-  void delete(int index) async {
+  Future<void> delete(int index) async {
     bool response = await deleteMyStock(state.value![index].stockCode);
     print(response);
   }
 
-  void updateStock(
-    int index,
-    String content,
-  ) async {
+  Future<void> updateStock(int index, String content) async {
     DateTime timeStamp = DateTime.now();
-    bool response =
-        await updateMyStock(content, timeStamp, state.value![index].stockCode);
+    bool response = await updateMyStock(content, timeStamp, state.value![index].stockCode);
     print(response);
   }
 }
 
-@riverpod
-class TextStateNotifier extends _$TextStateNotifier {
-  @override
-  String build() {
-    return '';
-  }
+final postScreenViewModelProvider = StateNotifierProvider<PostScreenViewModel, AsyncValue<List<Stock>>>((ref) {
+  return PostScreenViewModel();
+});
+
+class TextStateNotifier extends StateNotifier<String> {
+  TextStateNotifier() : super('');
 
   void updateText(String text) {
     state = text;
   }
 }
 
-@riverpod
-class CheckOfModalState extends _$CheckOfModalState {
-  @override
-  bool build() {
-    return false;
-  }
+final textStateNotifierProvider = StateNotifierProvider<TextStateNotifier, String>((ref) {
+  return TextStateNotifier();
+});
+
+
+class CheckOfModalState extends StateNotifier<bool> {
+  CheckOfModalState() : super(false);
 
   void updateCheck(bool check) {
     state = check;
   }
 }
+
+final checkOfModalStateProvider = StateNotifierProvider<CheckOfModalState, bool>((ref) {
+  return CheckOfModalState();
+});

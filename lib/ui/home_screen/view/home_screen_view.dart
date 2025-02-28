@@ -4,9 +4,7 @@ import 'package:stockr_ojt/model/stock_model.dart';
 import '../../post_screen/view/post_screen_view.dart';
 import '../../post_screen/view_model/post_screen_view_model.dart';
 import '../../../ui/dialog/home_screen_dialog.dart';
-import '../../../../model/get_my_stock_model.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -14,63 +12,69 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncData = ref.watch(postScreenViewModelProvider);
-    final postNotifier = ref.read(postScreenViewModelProvider.notifier);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: asyncData.when(
-            data: (data) {
-              final count = data.length;
-              final postNotifier = ref.read(postScreenViewModelProvider.notifier);
-              return Column(
-                children: [
-                  Container(
-                    color: Color(0xFFF8FAFA),
-                    width: double.infinity,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          child: Image.asset(
-                            'images/header_background.png',
-                            width: double.infinity,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Column(
+      body: Container(
+        color: const Color(0xFFF8FAFA),
+        child: Stack(
+          children: [
+            Positioned(
+              child: Image.asset(
+                'images/header_background.png',
+                width: double.infinity,
+                fit: BoxFit.fill,
+              ),
+            ),
+            SingleChildScrollView(
+            child: Center(
+              child: asyncData.when(
+                data: (data) {
+                  final count = data.length;
+                  final postNotifier =
+                      ref.read(postScreenViewModelProvider.notifier);
+                  return Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        child: Column(
                           children: [
-                            Container(
-                                alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.only(top: 60, left: 20),
-                                child: Text(
-                                  'ストック',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                            // ストックの有無によって表示を分岐
-                            count != 0
-                                ? StockListWidget(
-                                    data: data,
-                                    notifier: postNotifier,
-                                    count: count)
-                                : FirstTimeWidget(),
+                            Column(
+                              children: [
+                                Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.only(top: 60, left: 20),
+                                    child: const Text(
+                                      'ストック',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    )),
+                                // ストックの有無によって表示を分岐
+                                count != 0
+                                    ? StockListWidget(
+                                        data: data,
+                                        notifier: postNotifier,
+                                        count: count)
+                                    : const FirstTimeWidget(),
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
-            loading: () => CircularProgressIndicator(),
-            error: (error, stack) => Text('エラーが発生しました: $error'),
+                      ),
+                    ],
+                  );
+                },
+                loading: () => const CircularProgressIndicator(),
+                error: (error, stack) => Text('エラーが発生しました: $error'),
+              ),
+            ),
           ),
+          ],
         ),
       ),
       floatingActionButton: asyncData.when(
-        data:(data){
+        data: (data) {
           final count = data.length;
           return FloatingActionButton(
             onPressed: () async {
@@ -85,8 +89,8 @@ class HomeScreen extends ConsumerWidget {
               );
             },
             tooltip: 'add stock',
-            backgroundColor: Color(0xFF52C2CD),
-            shape: CircleBorder(),
+            backgroundColor: const Color(0xFF52C2CD),
+            shape: const CircleBorder(),
             child: const Icon(Icons.add, color: Colors.white, size: 30),
           );
         },
@@ -109,29 +113,26 @@ class FirstTimeWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Color(0xFFEAEEEF)),
+        border: Border.all(color: const Color(0xFFEAEEEF)),
       ),
-      margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+      margin: const EdgeInsets.only(top: 40, left: 20, right: 20),
       width: double.infinity,
       child: Column(
         children: [
           Image.asset('images/stocks_empty.png'),
-          Container(
-            child: Text(
-              '気づきをストック',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
+          const Text(
+            '気づきをストック',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          Column(
+          const SizedBox(
+            height: 15,
+          ),
+          const Column(
             children: [
-              Container(
-                child: Text('日々の仕事・生活で考えたことや、', style: TextStyle(fontSize: 12)),
-              ),
-              Container(
-                child: Text(
-                  '忘れずにおきたいと思った気づきを貯めていきましょう。',
-                  style: TextStyle(fontSize: 12),
-                ),
+              Text('日々の仕事・生活で考えたことや、', style: TextStyle(fontSize: 10)),
+              Text(
+                '忘れずにおきたいと思った気づきを貯めていきましょう。',
+                style: TextStyle(fontSize: 10),
               ),
               SizedBox(
                 height: 20,
@@ -166,13 +167,13 @@ class StockListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
+      margin: const EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
       width: double.infinity,
       child: Column(
         children: [
           ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: count,
             itemBuilder: (context, index) {
               final timeStamp = data[index].updatedAt ?? data[index].createdAt;
@@ -196,10 +197,10 @@ class StockListWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Color(0xFFEAEEEF)),
+                    border: Border.all(color: const Color(0xFFEAEEEF)),
                   ),
-                  margin: EdgeInsets.only(top: 10),
-                  padding: EdgeInsets.all(20),
+                  margin: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.all(20),
                   width: double.infinity,
                   child: Stack(
                     children: [
@@ -215,10 +216,10 @@ class StockListWidget extends StatelessWidget {
                           children: [
                             Container(
                               width: double.infinity,
-                              padding: EdgeInsets.only(bottom: 20),
+                              padding: const EdgeInsets.only(bottom: 20),
                               child: Text(
                                 data[index].text,
-                                style: TextStyle(fontSize: 14),
+                                style: const TextStyle(fontSize: 14),
                               ),
                             ),
                             Row(
@@ -226,7 +227,7 @@ class StockListWidget extends StatelessWidget {
                               children: [
                                 Text(
                                   timeStampText,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 12, color: Color(0xFFA2A2A2)),
                                 ),
                                 GestureDetector(
@@ -234,7 +235,7 @@ class StockListWidget extends StatelessWidget {
                                     returnHomeScreenDialog(
                                         context, index, notifier);
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.more_horiz_outlined,
                                     size: 20,
                                   ),
