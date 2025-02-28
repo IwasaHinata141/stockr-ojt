@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_my_stock.dart';
+part of 'stock_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,8 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Stock {
-  List<Map<String, dynamic>> get stockList =>
-      throw _privateConstructorUsedError;
+  String get text => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  String get stockCode => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Create a copy of Stock
   /// with the given fields replaced by the non-null parameter values.
@@ -30,7 +32,8 @@ abstract class $StockCopyWith<$Res> {
   factory $StockCopyWith(Stock value, $Res Function(Stock) then) =
       _$StockCopyWithImpl<$Res, Stock>;
   @useResult
-  $Res call({List<Map<String, dynamic>> stockList});
+  $Res call(
+      {String text, DateTime createdAt, String stockCode, DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -48,13 +51,28 @@ class _$StockCopyWithImpl<$Res, $Val extends Stock>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stockList = null,
+    Object? text = null,
+    Object? createdAt = null,
+    Object? stockCode = null,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      stockList: null == stockList
-          ? _value.stockList
-          : stockList // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      stockCode: null == stockCode
+          ? _value.stockCode
+          : stockCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -66,7 +84,8 @@ abstract class _$$StockImplCopyWith<$Res> implements $StockCopyWith<$Res> {
       __$$StockImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Map<String, dynamic>> stockList});
+  $Res call(
+      {String text, DateTime createdAt, String stockCode, DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -82,13 +101,28 @@ class __$$StockImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stockList = null,
+    Object? text = null,
+    Object? createdAt = null,
+    Object? stockCode = null,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$StockImpl(
-      stockList: null == stockList
-          ? _value._stockList
-          : stockList // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      stockCode: null == stockCode
+          ? _value.stockCode
+          : stockCode // ignore: cast_nullable_to_non_nullable
+              as String,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -96,21 +130,24 @@ class __$$StockImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$StockImpl implements _Stock {
-  const _$StockImpl({final List<Map<String, dynamic>> stockList = const []})
-      : _stockList = stockList;
+  const _$StockImpl(
+      {required this.text,
+      required this.createdAt,
+      required this.stockCode,
+      this.updatedAt});
 
-  final List<Map<String, dynamic>> _stockList;
   @override
-  @JsonKey()
-  List<Map<String, dynamic>> get stockList {
-    if (_stockList is EqualUnmodifiableListView) return _stockList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_stockList);
-  }
+  final String text;
+  @override
+  final DateTime createdAt;
+  @override
+  final String stockCode;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString() {
-    return 'Stock(stockList: $stockList)';
+    return 'Stock(text: $text, createdAt: $createdAt, stockCode: $stockCode, updatedAt: $updatedAt)';
   }
 
   @override
@@ -118,13 +155,18 @@ class _$StockImpl implements _Stock {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StockImpl &&
-            const DeepCollectionEquality()
-                .equals(other._stockList, _stockList));
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.stockCode, stockCode) ||
+                other.stockCode == stockCode) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_stockList));
+      Object.hash(runtimeType, text, createdAt, stockCode, updatedAt);
 
   /// Create a copy of Stock
   /// with the given fields replaced by the non-null parameter values.
@@ -136,11 +178,20 @@ class _$StockImpl implements _Stock {
 }
 
 abstract class _Stock implements Stock {
-  const factory _Stock({final List<Map<String, dynamic>> stockList}) =
-      _$StockImpl;
+  const factory _Stock(
+      {required final String text,
+      required final DateTime createdAt,
+      required final String stockCode,
+      final DateTime? updatedAt}) = _$StockImpl;
 
   @override
-  List<Map<String, dynamic>> get stockList;
+  String get text;
+  @override
+  DateTime get createdAt;
+  @override
+  String get stockCode;
+  @override
+  DateTime? get updatedAt;
 
   /// Create a copy of Stock
   /// with the given fields replaced by the non-null parameter values.

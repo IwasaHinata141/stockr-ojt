@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../ui/dialog/post_screen_dialog.dart';
 import '../view_model/post_screen_view_model.dart';
-import '../view_model/checkmodal_viewmodel.dart';
 
 class PostScreen extends ConsumerStatefulWidget {
   PostScreen({
@@ -33,7 +32,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!ref.read(checkOfPriviousListProvider)) {
+      if (!ref.read(checkOfModalStateProvider)) {
         _focusNode.requestFocus();
       } else {
         _focusNode.unfocus();
@@ -52,8 +51,8 @@ class _PostScreenState extends ConsumerState<PostScreen> {
   Widget build(BuildContext context) {
     final postNotifier = ref.read(postScreenViewModelProvider.notifier);
     final textState = ref.watch(textStateNotifierProvider);
-    final isModalVisible = ref.watch(checkOfPriviousListProvider);
-    final modalStateNotifier = ref.read(checkOfPriviousListProvider.notifier);
+    // final isModalVisible = ref.watch(checkOfModalStateProvider);
+    final modalStateNotifier = ref.read(checkOfModalStateProvider.notifier);
 
     return SafeArea(
         top: false,
@@ -105,7 +104,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                             onPressed: () {
                               if (_controller.text.isNotEmpty) {
                                 if (widget.checkOfPriviousList) {
-                                  postNotifier.updatePost(widget.index, _controller.text);
+                                  postNotifier.updateStock(widget.index, _controller.text);
                                 } else {
                                   postNotifier.post(_controller.text);
                                 }

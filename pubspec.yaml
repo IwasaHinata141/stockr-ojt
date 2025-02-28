@@ -43,7 +43,7 @@ dependencies:
   hooks_riverpod: ^2.6.1
   firebase_core: ^3.12.0
   cloud_firestore: ^5.6.4
-  freezed: ^2.5.7
+  
 
 dev_dependencies:
   flutter_test:
@@ -51,7 +51,7 @@ dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
+  # activated in the `analysis_options.yaml` file located at the root of your;
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
 
@@ -60,7 +60,9 @@ dev_dependencies:
   build_runner: ^2.4.13
   custom_lint: ^0.7.0
   riverpod_lint: ^2.6.3
-  freezed: ^2.0.0
+  json_serializable:
+  freezed:
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
