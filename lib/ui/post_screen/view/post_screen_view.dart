@@ -4,7 +4,7 @@ import '../../../ui/dialog/post_screen_dialog.dart';
 import '../view_model/post_screen_view_model.dart';
 
 class PostScreen extends ConsumerStatefulWidget {
-  PostScreen({
+  const PostScreen({
     super.key,
     required this.index,
     required this.content,
@@ -65,8 +65,8 @@ class _PostScreenState extends ConsumerState<PostScreen> {
             children: <Widget>[
               Container(
                 padding:
-                    EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
-                decoration: BoxDecoration(
+                    const EdgeInsets.only(top: 30, left: 20, right: 20, bottom: 20),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   border: Border(
                     bottom: BorderSide(
@@ -89,32 +89,30 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                             returnPostScreenDialog(context, modalStateNotifier);
                           }
                         },
-                        child: Container(
-                            child: Icon(
-                          Icons.close_outlined,
-                          size: 30,
-                        ))),
-                    Container(
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: textState.isEmpty
-                                  ? Color(0xFFCAD5D6)
-                                  : Color(0xFF52C2CD),
-                            ),
-                            onPressed: () {
-                              if (_controller.text.isNotEmpty) {
-                                if (widget.checkOfPriviousList) {
-                                  postNotifier.updateStock(widget.index, _controller.text);
-                                } else {
-                                  postNotifier.post(_controller.text);
-                                }
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: Text("ストックする",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)))),
+                        child: const Icon(
+                                                  Icons.close_outlined,
+                                                  size: 30,
+                                                )),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: textState.isEmpty
+                              ? const Color(0xFFCAD5D6)
+                              : const Color(0xFF52C2CD),
+                        ),
+                        onPressed: () {
+                          if (_controller.text.isNotEmpty) {
+                            if (widget.checkOfPriviousList) {
+                              postNotifier.updateStock(widget.index, _controller.text);
+                            } else {
+                              postNotifier.post(_controller.text);
+                            }
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: const Text("ストックする",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold))),
                   ],
                 ),
               ),
@@ -124,7 +122,7 @@ class _PostScreenState extends ConsumerState<PostScreen> {
                   child: TextField(
                     controller: _controller, // コントローラーを設定
                     focusNode: _focusNode, // フォーカスノードを設定
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none, // 枠を見えないようにする
                       hintText: '気づいたことをストックしましょう',
                     ),

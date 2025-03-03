@@ -8,12 +8,12 @@ void returnPostScreenDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        insetPadding: EdgeInsets.all(8),
+        insetPadding: const EdgeInsets.all(8),
         contentPadding: EdgeInsets.zero,
         content: Container(
           height: 200,
           width: double.maxFinite,
-          padding: EdgeInsets.only(left: 20, right: 20),
+          padding: const EdgeInsets.only(left: 20, right: 20),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -21,31 +21,28 @@ void returnPostScreenDialog(
           ),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Container(
-                  child: const Text(
-                "変更を破棄しますか？",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              )),
-              SizedBox(
+              const Text(
+                              "変更を破棄しますか？",
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+              const SizedBox(
                 height: 20,
               ),
-              Container(
-                  child: const Text(
-                "このまま破棄すると編集した内容が",
-                style: TextStyle(fontSize: 12),
-              )),
-              Container(
-                  child: const Text("全て失われます", style: TextStyle(fontSize: 12))),
-              SizedBox(
+              const Text(
+                              "このまま破棄すると編集した内容が",
+                              style: TextStyle(fontSize: 12),
+                            ),
+              const Text("全て失われます", style: TextStyle(fontSize: 12)),
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
+                  SizedBox(
                       width: MediaQuery.of(context).size.width * 0.4, 
                       height: 50,
                       child: ElevatedButton(
@@ -58,19 +55,19 @@ void returnPostScreenDialog(
                           onPressed: () {
                             Navigator.popUntil(context, (route) => route.isFirst);
                           },
-                          child: Text("破棄する",
+                          child: const Text("破棄する",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
-                                  SizedBox(width: 10,),
+                                  const SizedBox(width: 10,),
                   Container(
                       width: MediaQuery.of(context).size.width * 0.4, 
                       height: 50,
-                      decoration: BoxDecoration(),
+                      decoration: const BoxDecoration(),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFFFFFFFF),
-                            side: BorderSide(color: const Color(0xFF768D8F)),
+                            side: const BorderSide(color: Color(0xFF768D8F)),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -79,7 +76,7 @@ void returnPostScreenDialog(
                             Navigator.pop(context);
                             notifier.updateCheck(false);
                           },
-                          child: Text("編集を続ける",
+                          child: const Text("編集を続ける",
                               style: TextStyle(
                                   color: Color(0xFF768D8F),
                                   fontWeight: FontWeight.bold)))),
