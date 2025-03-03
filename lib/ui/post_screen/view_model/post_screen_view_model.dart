@@ -1,11 +1,11 @@
-import '../../../model/add_my_stock_model.dart';
-import '../../../model/update_my_stock_model.dart';
-import '../../../model/delete_my_stock_model.dart';
+import '../../../model/hancle_stocks/add_my_stock_model.dart';
+import '../../../model/hancle_stocks/update_my_stock_model.dart';
+import '../../../model/hancle_stocks/delete_my_stock_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../model/get_my_stock_model.dart';
-import '../../../model/stock_model.dart';
+import '../../../model/get_datas/get_my_stock_model.dart';
+import '../../../model/freezed/stock_model.dart';
 
 
 class PostScreenViewModel extends StateNotifier<AsyncValue<List<Stock>>> {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stockr_ojt/model/stock_model.dart';
+import 'package:stockr_ojt/model/freezed/stock_model.dart';
 import '../../post_screen/view/post_screen_view.dart';
 import '../../post_screen/view_model/post_screen_view_model.dart';
 import '../../../ui/dialog/home_screen_dialog.dart';
@@ -12,7 +12,8 @@ class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncData = ref.watch(postScreenViewModelProvider);
-
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         color: const Color(0xFFF8FAFA),
@@ -42,13 +43,22 @@ class HomeScreen extends ConsumerWidget {
                               children: [
                                 Container(
                                     alignment: Alignment.centerLeft,
-                                    padding: const EdgeInsets.only(top: 60, left: 20),
-                                    child: const Text(
-                                      'ストック',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold),
+                                    padding: const EdgeInsets.only(top: 40, left: 20),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                          height: screenHeight*0.1,
+                                          width: screenWidth*0.1,
+                                          child: Image.asset('images/person-24px3.png')),
+                                        const SizedBox(width: 10),
+                                        const Text(
+                                          'ストック',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     )),
                                 // ストックの有無によって表示を分岐
                                 count != 0
@@ -167,7 +177,7 @@ class StockListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 40, left: 20, right: 20, bottom: 20),
+      margin: const EdgeInsets.only(top: 0, left: 20, right: 20, bottom: 20),
       width: double.infinity,
       child: Column(
         children: [
@@ -199,7 +209,7 @@ class StockListWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: const Color(0xFFEAEEEF)),
                   ),
-                  margin: const EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(bottom: 10),
                   padding: const EdgeInsets.all(20),
                   width: double.infinity,
                   child: Stack(
@@ -211,39 +221,37 @@ class StockListWidget extends StatelessWidget {
                           'images/normal.png',
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Text(
-                                data[index].text,
-                                style: const TextStyle(fontSize: 14),
+                      Column(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: Text(
+                              data[index].text,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                timeStampText,
+                                style: const TextStyle(
+                                    fontSize: 12, color: Color(0xFFA2A2A2)),
                               ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  timeStampText,
-                                  style: const TextStyle(
-                                      fontSize: 12, color: Color(0xFFA2A2A2)),
+                              GestureDetector(
+                                onTap: () {
+                                  returnHomeScreenDialog(
+                                      context, index, notifier);
+                                },
+                                child: const Icon(
+                                  Icons.more_horiz_outlined,
+                                  size: 20,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    returnHomeScreenDialog(
-                                        context, index, notifier);
-                                  },
-                                  child: const Icon(
-                                    Icons.more_horiz_outlined,
-                                    size: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),
