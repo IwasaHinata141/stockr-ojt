@@ -6,7 +6,6 @@ import 'firebase_options.dart';
 import 'package:stockr_ojt/ui/dashboard_screen/view/dashboard_screen_view.dart';
 
 void main() async {
-
  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
